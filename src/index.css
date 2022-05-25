@@ -26,6 +26,12 @@
   tr{
     border-bottom: 1px solid #ccc; 
     line-height: 1.8em;
+    
+  }
+
+  img{
+    height: 30px;
+    width: 30px;
   }
 
   .first_cell{
@@ -34,7 +40,8 @@
   }
 
   .second_cell{
-    width: 30%; text-align: right;
+    width: 20%; 
+    text-align: right;
   }
 
   table{

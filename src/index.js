@@ -55,11 +55,11 @@ async function renderUsers() {
     });
 }
 
-/*function addFakeElement(){
+function addFakeElement(){
     items.push({ name: 'Socks', price: 25, count: 1 })
     items.push({ name: 'Jeans', price: 75, count: 1 })
     items.push({ name: 'Short', price: 35, count: 1 })
-}*/
+}
 
 
 function totalValue() {
@@ -72,7 +72,11 @@ function totalValue() {
 }
 
 function shippingValue(){
-    if (items.length > 4)
+    var c = 0;
+    for (var i = 0; i < items.length; i++) {
+        c += parseFloat(items[i].count);
+    }
+    if (c > 4)
         document.getElementById('shipping-value').innerHTML = "Shipping Value: 40";
     else
     document.getElementById('shipping-value').innerHTML = "Shipping Value: 20";
@@ -82,6 +86,9 @@ function makeTable() {
     //Create a HTML Table element.
     var table = document.createElement("TABLE");
     table.setAttribute("id", "TABLE")
+
+    if(items.length === 0)
+        addFakeElement();
     totalValue()
     shippingValue()
 
@@ -135,6 +142,7 @@ function increaseCount(rowid) {
     items[rowid].count = count;
     element.innerHTML = count;
     totalValue();
+    shippingValue();
 }
 
 function decreaseCount(rowid) {
@@ -149,6 +157,7 @@ function decreaseCount(rowid) {
     else
         element.innerHTML = count;
     totalValue();
+    shippingValue();
 }
 
 function remove(rowid) {

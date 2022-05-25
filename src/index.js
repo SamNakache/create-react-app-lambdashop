@@ -4,20 +4,34 @@ import './index.css';
 import deletePic from "./delete.png"
 import plusPic from "./plus.png"
 import minusPic from "./minus.png"
-
-
-
 //import App from './App';
 //import * as serviceWorker from './serviceWorker';
 
 window.remove = remove;
 window.increaseCount = increaseCount;
 window.decreaseCount = decreaseCount;
+window.reset = reset;
+
+
 var items = [];
 let total_value = 0;
-//getUsers();
-setTimeout(() => { makeTable(); }, 2000);
-//renderUsers();
+
+window.onload = function(){
+    var sitems = JSON.parse(sessionStorage.getItem("items"));
+    if (sitems !==null)
+        items = sitems
+        
+    else{
+        getUsers(); 
+        renderUsers();
+    }
+      setTimeout(() => { makeTable(); }, 4000);
+
+}
+
+window.onbeforeunload = function() {
+    sessionStorage.setItem("items", JSON.stringify(items));
+}
 
 
 async function getUsers() {
@@ -39,19 +53,14 @@ async function renderUsers() {
             count: 1 })
         
     });
-
-
-    
 }
 
-function remove(rowid) {
-    var row = document.getElementById(rowid);
-    row.parentNode.removeChild(row);
-    items.splice(rowid, 1);
-    if (items.length <= 4)
-        shippingValue();
+/*function addFakeElement(){
+    items.push({ name: 'Socks', price: 25, count: 1 })
+    items.push({ name: 'Jeans', price: 75, count: 1 })
+    items.push({ name: 'Short', price: 35, count: 1 })
+}*/
 
-}
 
 function totalValue() {
     total_value = 0;
@@ -70,14 +79,9 @@ function shippingValue(){
 }
 
 function makeTable() {
-
     //Create a HTML Table element.
     var table = document.createElement("TABLE");
     table.setAttribute("id", "TABLE")
-    items.push({ name: 'Socks', price: 25, count: 1 })
-    items.push({ name: 'Jeans', price: 75, count: 1 })
-    items.push({ name: 'Short', price: 35, count: 1 })
-
     totalValue()
     shippingValue()
 
@@ -98,7 +102,7 @@ function makeTable() {
         plus.setAttribute("onclick", "increaseCount(" + i + ")");
         plus.appendChild(img);
 
-        var cell = row.insertCell(-1);
+        cell = row.insertCell(-1);
         cell.innerHTML = items[i].count;
         cell.setAttribute("id", "count" + i)
         cell.setAttribute("class", "third_cell");
@@ -144,8 +148,23 @@ function decreaseCount(rowid) {
     }
     else
         element.innerHTML = count;
-        totalValue();
+    totalValue();
 }
+
+function remove(rowid) {
+    var row = document.getElementById(rowid);
+    row.parentNode.removeChild(row);
+    items.splice(rowid, 1);
+    if (items.length <= 4)
+        shippingValue();
+
+}
+
+function reset(){
+    window.location.reload()
+    sessionStorage.removeItem("items");
+}
+
 
 
 

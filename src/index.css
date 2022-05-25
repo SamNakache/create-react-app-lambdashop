@@ -30,6 +30,11 @@
     
   }
 
+  .sum{
+    font-weight: bold;
+    text-decoration: underline;     
+  }
+
   img{
     height: 30px;
     width: 30px;
